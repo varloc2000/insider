@@ -1,0 +1,10 @@
+<project name="insider" default="assets">
+    <target name="test">
+        <exec command="phpunit -c app" checkreturn="true" logoutput="true" />
+    </target>
+    <target name="assets">
+        <property name="path" value="src/Insider/AppBundle/Resources/public/css" />
+        <exec command="lessc -x ${path}/style.less > ${path}/style.css" checkreturn="true" logoutput="true" />
+        <exec command="php app/console assets:install --symlink" checkreturn="true" logoutput="true" />
+    </target>
+</project>

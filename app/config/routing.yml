@@ -1,0 +1,4 @@
+insider_app:
+    resource: "@InsiderAppBundle/Resources/config/routing.yml"
+    prefix:   /
+

@@ -9,3 +9,6 @@
 /vendor/
 /bin/
 /composer.phar
+
+/node_modules/
+/src/Insider/AppBundle/Resources/public/components/cache/

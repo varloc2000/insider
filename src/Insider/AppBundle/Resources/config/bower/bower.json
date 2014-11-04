@@ -1,0 +1,8 @@
+{
+    "name": "InsiderAppBundle",
+    "dependencies": {
+        "jquery": "~1.9.0",
+        "bootstrap": "latest",
+        "font-awesome": "4.2.0"
+    }
+}
