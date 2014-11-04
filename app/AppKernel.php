@@ -21,6 +21,7 @@ class AppKernel extends Kernel
 
             // Third party vendors
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Sp\BowerBundle\SpBowerBundle(),
         );
 
