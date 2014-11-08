@@ -52,10 +52,14 @@ class Game
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Season", inversedBy="games")
+     * @ORM\Column(name="tour", type="integer")
      */
-    private $season;
+    private $tour;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="League", inversedBy="games")
+     */
+    private $league;
 
     /**
      * Get id
@@ -160,25 +164,47 @@ class Game
     }
 
     /**
-     * Get season.
+     * Get tour.
      *
-     * @return Season
+     * @return integer
      */
-    public function getSeason()
+    public function getTour()
     {
-        return $this->season;
+        return $this->tour;
     }
 
     /**
-     * Set season.
+     * Set tour.
      *
-     * @param Season $season
-     *
+     * @param integer $tour
      * @return self
      */
-    private function _setSeason($season)
+    public function setTour($tour)
     {
-        $this->season = $season;
+        $this->tour = $tour;
+
+        return $this;
+    }
+
+    /**
+     * Get league.
+     *
+     * @return League
+     */
+    public function getLeague()
+    {
+        return $this->league;
+    }
+
+    /**
+     * Set league.
+     *
+     * @param League $league
+     * @return self
+     */
+    public function setLeague($league)
+    {
+        $this->league = $league;
 
         return $this;
     }

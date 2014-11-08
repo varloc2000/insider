@@ -1,0 +1,37 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/insiderapp/css/style.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+    <div id="wrap">
+        <!-- Static navbar -->
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="{{ path('insider_app_homepage') }}" class="all-logo">
+                        <h1>Insider</h1>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <span class="pull-left text-muted">Insider</span>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {% javascripts
+        "@jquery_js"
+        "@bootstrap_js"
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

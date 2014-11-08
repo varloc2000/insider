@@ -1,9 +1,16 @@
-{% extends '::base.html.twig' %}
+{% extends 'InsiderAppBundle::layout.html.twig' %}
 
-{% block title %}Premier league table | Insider{% endblock %}
+{% block title %}League table | Insider{% endblock %}
 
-{% block body %}
-    Hello!
+{% block content %}
+    <div class="container" style="padding-top: 105px;">
+            <div class="row">
+                <div id="container">
+                    {{ include('InsiderAppBundle:Default:week_table.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

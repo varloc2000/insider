@@ -3,6 +3,7 @@
 namespace Insider\AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
 /**
  * GameRepository
@@ -12,4 +13,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class GameRepository extends EntityRepository
 {
+    public function getGamesByTour($tour)
+    {
+        return $this->createQueryBuilder('g')
+            ->addSelect('b')
+            ->addSelect('r')
+            ->andWhere('g.tour = :tour')
+            ->setParameter('tour', $tour)
+            ->leftJoin('g.blue', 'b')
+            ->leftJoin('g.red', 'r')
+            ->getQuery()
+            ->execute()
+        ;
+    }
 }
