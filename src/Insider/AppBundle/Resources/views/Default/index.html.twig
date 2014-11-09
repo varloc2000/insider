@@ -5,7 +5,7 @@
 {% block content %}
     <div class="container" style="padding-top: 105px;">
             <div class="row">
-                <div id="container">
+                <div id="league-table-wrapper" class="league-table-wrapper">
                     {{ include('InsiderAppBundle:Default:week_table.html.twig') }}
                 </div>
             </div>
@@ -14,4 +14,13 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/insiderapp/js/insider.js') }}"></script>
+    <script>
+        $(function() {
+            var LeagueTable = new Insider.leagueTable('league-table');
+
+            LeagueTable.init();
+        });
+    </script>
 {% endblock %}

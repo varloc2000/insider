@@ -24,30 +24,30 @@ class Game
     /**
      * @var Team
      *
-     * @ORM\ManyToOne(targetEntity="Team")
+     * @ORM\ManyToOne(targetEntity="Team", inversedBy="guestGames")
      */
-    private $blue;
+    private $guest;
 
     /**
      * @var Team
      *
-     * @ORM\ManyToOne(targetEntity="Team")
+     * @ORM\ManyToOne(targetEntity="Team", inversedBy="homeGames")
      */
-    private $red;
+    private $home;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="blue_goal", type="integer")
+     * @ORM\Column(name="guest_goal", type="integer")
      */
-    private $blueGoal;
+    private $guestGoal;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="red_goal", type="integer")
+     * @ORM\Column(name="home_goal", type="integer")
      */
-    private $redGoal;
+    private $homeGoal;
 
     /**
      * @var integer
@@ -72,95 +72,95 @@ class Game
     }
 
     /**
-     * Set blue
+     * Set guest
      *
-     * @param guid $blue
+     * @param guid $guest
      * @return Game
      */
-    public function setBlue($blue)
+    public function setGuest($guest)
     {
-        $this->blue = $blue;
+        $this->guest = $guest;
 
         return $this;
     }
 
     /**
-     * Get blue
+     * Get guest
      *
      * @return guid 
      */
-    public function getBlue()
+    public function getGuest()
     {
-        return $this->blue;
+        return $this->guest;
     }
 
     /**
-     * Set red
+     * Set home
      *
-     * @param \stdClass $red
+     * @param \stdClass $home
      * @return Game
      */
-    public function setRed($red)
+    public function setHome($home)
     {
-        $this->red = $red;
+        $this->home = $home;
 
         return $this;
     }
 
     /**
-     * Get red
+     * Get home
      *
      * @return \stdClass 
      */
-    public function getRed()
+    public function getHome()
     {
-        return $this->red;
+        return $this->home;
     }
 
     /**
-     * Set blueGoal
+     * Set guestGoal
      *
-     * @param integer $blueGoal
+     * @param integer $guestGoal
      * @return Game
      */
-    public function setBlueGoal($blueGoal)
+    public function setGuestGoal($guestGoal)
     {
-        $this->blueGoal = $blueGoal;
+        $this->guestGoal = $guestGoal;
 
         return $this;
     }
 
     /**
-     * Get blueGoal
+     * Get guestGoal
      *
      * @return integer 
      */
-    public function getBlueGoal()
+    public function getGuestGoal()
     {
-        return $this->blueGoal;
+        return $this->guestGoal;
     }
 
     /**
-     * Set redGoal
+     * Set homeGoal
      *
-     * @param integer $redGoal
+     * @param integer $homeGoal
      * @return Game
      */
-    public function setRedGoal($redGoal)
+    public function setHomeGoal($homeGoal)
     {
-        $this->redGoal = $redGoal;
+        $this->homeGoal = $homeGoal;
 
         return $this;
     }
 
     /**
-     * Get redGoal
+     * Get homeGoal
      *
      * @return integer 
      */
-    public function getRedGoal()
+    public function getHomeGoal()
     {
-        return $this->redGoal;
+        return $this->homeGoal;
     }
 
     /**
@@ -207,5 +207,57 @@ class Game
         $this->league = $league;
 
         return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isHomeWin()
+    {
+        return ($this->homeGoal > $this->guestGoal);
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isGuestWin()
+    {
+        return ($this->homeGoal < $this->guestGoal);
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isDraw()
+    {
+        return ($this->homeGoal == $this->guestGoal);
+    }
+
+    /**
+     * @return Team|null
+     */
+    public function getWinner()
+    {
+        if ($this->homeGoal > $this->guestGoal) {
+            return $this->home;
+        } elseif ($this->homeGoal < $this->guestGoal) {
+            return $this->guest;
+        }
+
+        return null;
+    }
+
+    /**
+     * @return Team|null
+     */
+    public function getLooser()
+    {
+        if ($this->homeGoal > $this->guestGoal) {
+            return $this->guest;
+        } elseif ($this->homeGoal < $this->guestGoal) {
+            return $this->home;
+        }
+
+        return null;
     }
 }

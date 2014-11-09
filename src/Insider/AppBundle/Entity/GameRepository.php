@@ -13,17 +13,33 @@ use Doctrine\ORM\Query;
  */
 class GameRepository extends EntityRepository
 {
-    public function getGamesByTour($tour)
+    public function getGamesByTour($tour = null)
+    {
+        $qb = $this->createQueryBuilder('g')
+            ->addSelect('l')
+            ->addSelect('r')
+            ->leftJoin('g.home', 'l')
+            ->leftJoin('g.guest', 'r')
+        ;
+
+        if (null !== $tour) {
+            $qb
+                ->andWhere('g.tour = :tour')
+                ->setParameter('tour', $tour)
+            ;
+        }
+
+        return $qb->getQuery()->execute();
+    }
+
+    public function getMaxTour()
     {
         return $this->createQueryBuilder('g')
-            ->addSelect('b')
-            ->addSelect('r')
-            ->andWhere('g.tour = :tour')
-            ->setParameter('tour', $tour)
-            ->leftJoin('g.blue', 'b')
-            ->leftJoin('g.red', 'r')
+            ->select('g.tour')
+            ->orderBy('g.tour', 'DESC')
+            ->setMaxResults(1)
             ->getQuery()
-            ->execute()
+            ->getSingleResult()
         ;
     }
 }

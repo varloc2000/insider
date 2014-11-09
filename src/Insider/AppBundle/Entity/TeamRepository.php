@@ -12,4 +12,19 @@ use Doctrine\ORM\EntityRepository;
  */
 class TeamRepository extends EntityRepository
 {
+    public function getLeagueDataByTour($tour)
+    {
+        return $this->createQueryBuilder('t')
+            ->addSelect('hg')
+            ->addSelect('gg')
+            ->leftJoin('t.homeGames', 'hg')
+            ->leftJoin('t.guestGames', 'gg')
+            ->orWhere('hg.tour <= :tour')
+            ->orWhere('gg.tour <= :tour')
+            ->setParameter('tour', $tour)
+            ->groupBy('t.id')
+            ->getQuery()
+            ->execute()
+        ;
+    }
 }

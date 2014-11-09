@@ -30,12 +30,18 @@ class LeagueTourGenerator
 
         $i = count($this->tours);
 
-        while ($i < $this->commandsCount - 1) {
+        $lapTourCount = $this->commandsCount - 1;
+
+        while ($i < $lapTourCount * 2) {
             // reset array keys
             $r = array_values($r);
             $l = array_values($l);
 
-            $this->tours[] = [$l, array_reverse($r)];
+            if ($i <= $lapTourCount) {
+                $this->tours[] = [$l, array_reverse($r)];
+            } else {
+                $this->tours[] = [$r, array_reverse($l)];
+            }
 
             /**
              * Make clockwise displacement between left and right array elements

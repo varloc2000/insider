@@ -19,14 +19,10 @@ class LoadInsiderData extends AbstractFixture implements FixtureInterface
     //     'Liverpool',
     // ];
     private $teamList = [
-        'one',
-        'two',
-        'tree',
-        'four',
-        'five',
-        'six',
-        'seven',
-        'eight',
+        'T1',
+        'T2',
+        'T3',
+        'T4',
     ];
 
     /**
@@ -62,11 +58,11 @@ class LoadInsiderData extends AbstractFixture implements FixtureInterface
 
                 $game->setTour($tourNumber + 1);
 
-                $game->setBlue($leftCommand);
-                $game->setRed($r[$i]);
+                $game->setHome($leftCommand);
+                $game->setGuest($r[$i]);
 
-                $game->setBlueGoal(rand(0, 7));
-                $game->setRedGoal(rand(0, 7));
+                $game->setHomeGoal(rand(0, 7));
+                $game->setGuestGoal(rand(0, 7));
 
                 $manager->persist($game);
 
