@@ -39,7 +39,7 @@ class GameRepository extends EntityRepository
             ->orderBy('g.tour', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
-            ->getSingleResult()
+            ->getSingleScalarResult()
         ;
     }
 }

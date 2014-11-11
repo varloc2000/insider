@@ -66,6 +66,8 @@ Insider.leagueTable = function(leagueTableId) {
                     return;
                 }
 
+                window.history.pushState('', '', '?week=' + week);
+
                 _self.$tableWrapper.html(data.content);
                 _self.currentWeek = week;
             },

@@ -25,11 +25,11 @@ class DefaultController extends Controller
 
         $teams = $this->getDoctrine()
             ->getRepository('InsiderAppBundle:Team')
-            ->getLeagueDataByTour($week)
+            ->getLeagueDataByTour(null !== $week ? $week : $tour)
         ;
 
         foreach ($teams as $team) {
-            $team->calculateGamesStatistic();
+            $team[0]->calculateGamesStatistic();
         }
 
         if ($request->isXmlHttpRequest()) {
@@ -40,7 +40,7 @@ class DefaultController extends Controller
                 'content' => $this->render('InsiderAppBundle:Default:week_table.html.twig', [
                     'games' => $games,
                     'week' => $week,
-                    'last_week' => $tour ? $tour['tour'] : null,
+                    'last_week' => $tour,
                     'teams' => $teams,
                 ])->getContent(),
             ]);
@@ -50,7 +50,7 @@ class DefaultController extends Controller
             $response = $this->render('InsiderAppBundle:Default:index.html.twig', [
                 'games' => $games,
                 'week' => $week,
-                'last_week' => $tour ? $tour['tour'] : null,
+                'last_week' => $tour,
                 'teams' => $teams,
             ]);
         }

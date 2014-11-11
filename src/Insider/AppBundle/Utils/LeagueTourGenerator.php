@@ -37,7 +37,7 @@ class LeagueTourGenerator
             $r = array_values($r);
             $l = array_values($l);
 
-            if ($i <= $lapTourCount) {
+            if ($i < $lapTourCount) {
                 $this->tours[] = [$l, array_reverse($r)];
             } else {
                 $this->tours[] = [$r, array_reverse($l)];

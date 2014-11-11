@@ -12,17 +12,11 @@ use Insider\AppBundle\Entity\League;
 
 class LoadInsiderData extends AbstractFixture implements FixtureInterface
 {
-    // private $teamList = [
-    //     'Arsenal',
-    //     'Manchester City',
-    //     'Chelsea',
-    //     'Liverpool',
-    // ];
     private $teamList = [
-        'T1',
-        'T2',
-        'T3',
-        'T4',
+        'T1 Arsenal',
+        'T2 Manchester City',
+        'T3 Chelsea',
+        'T4 Liverpool',
     ];
 
     /**

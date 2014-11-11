@@ -18,11 +18,14 @@
                             <th>W</th>
                             <th>D</th>
                             <th>L</th>
+                            <th>GF</th>
+                            <th>GA</th>
                             <th>GD</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for team in teams %}
+                        {% for data in teams %}
+                            {% set team = data.0 %}
                             <tr>
                                 <td>{{ team.name }}</td>
                                 <td>{{ team.pts }}</td>
@@ -30,7 +33,9 @@
                                 <td>{{ team.won }}</td>
                                 <td>{{ team.drawn }}</td>
                                 <td>{{ team.lost }}</td>
-                                <td>{{ team.gd }}</td>
+                                <td>{{ data.GF }}</td>
+                                <td>{{ data.GA }}</td>
+                                <td>{{ data.GD }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -49,6 +54,7 @@
                                         href="{{ path('insider_app_homepage', {week: week - 1}) }}"
                                         data-href="{{ path('insider_app_homepage') }}"
                                         data-direction="prev"
+                                        title="Show previous week"
                                     >
                                         <i class="fa fa-arrow-circle-left"></i>
                                     </a>
@@ -62,6 +68,7 @@
                                         href="{{ path('insider_app_homepage', {week: week + 1}) }}"
                                         data-href="{{ path('insider_app_homepage') }}"
                                         data-direction="next"
+                                        title="Show next week"
                                     >
                                         <i class="fa fa-arrow-circle-right"></i>
                                     </a>
@@ -100,6 +107,16 @@
         </tr>
     </tbody>
 </table>
+
+{# Hidden spinner div #}
 <div class="league-table-spinner">
     <i class="fa fa-soccer-ball-o fa-spin"></i>
 </div>
+
+{% if null != week %}
+    <div class="row pull-left">
+        <div class="col-md-12">
+            <a href="{{ path('insider_app_homepage') }}" class="btn btn-primary">Show All Matches</a>
+        </div>
+    </div>
+{% endif %}

@@ -12,19 +12,30 @@ use Doctrine\ORM\EntityRepository;
  */
 class TeamRepository extends EntityRepository
 {
+    /**
+     * @param integer $tour
+     * @return array
+     */
     public function getLeagueDataByTour($tour)
     {
-        return $this->createQueryBuilder('t')
+        $qb = $this->createQueryBuilder('t')
+            ->addSelect('SUM(hg.homeGoal) as winAtHomeGoals')
+            ->addSelect('SUM(hg.guestGoal) as lostAtHomeGoals')
+            ->addSelect('SUM(gg.homeGoal) as lostAtGuestGoals')
+            ->addSelect('SUM(gg.guestGoal) as winAtGuestGoals')
+            ->addSelect('(COALESCE(SUM(hg.homeGoal),0) + COALESCE(SUM(gg.guestGoal),0)) as GF')
+            ->addSelect('(COALESCE(SUM(hg.guestGoal),0) + COALESCE(SUM(gg.homeGoal),0)) as GA')
+            ->addSelect('((COALESCE(SUM(hg.homeGoal),0) + COALESCE(SUM(gg.guestGoal),0)) - (COALESCE(SUM(hg.guestGoal),0) + COALESCE(SUM(gg.homeGoal),0))) as GD')
             ->addSelect('hg')
             ->addSelect('gg')
-            ->leftJoin('t.homeGames', 'hg')
-            ->leftJoin('t.guestGames', 'gg')
-            ->orWhere('hg.tour <= :tour')
-            ->orWhere('gg.tour <= :tour')
+            ->leftJoin('t.homeGames', 'hg', \Doctrine\ORM\Query\Expr\Join::WITH, 'hg.guest != t.id AND hg.tour <= :tour')
+            ->leftJoin('t.guestGames', 'gg', \Doctrine\ORM\Query\Expr\Join::WITH, 'gg.home != t.id AND gg.tour <= :tour')
             ->setParameter('tour', $tour)
-            ->groupBy('t.id')
-            ->getQuery()
-            ->execute()
+            ->addGroupBy('t.id')
+            ->addGroupBy('hg')
+            ->addGroupBy('gg')
         ;
+
+        return $qb->getQuery()->execute();
     }
 }

@@ -293,12 +293,23 @@ class Team
     }
 
     /**
-     * @param integer $PTS the 
+     * @param integer $PTS
      * @return self
      */
     public function setPTS($PTS)
     {
         $this->PTS = $PTS;
+
+        return $this;
+    }
+
+    /**
+     * @param integer $PTS 
+     * @return self
+     */
+    public function addPTS($PTS)
+    {
+        $this->PTS = $this->PTS + $PTS;
 
         return $this;
     }
@@ -309,10 +320,12 @@ class Team
             $this->P++;
             if ($game->isHomeWin()) {
                 $this->W++;
+                $this->addPTS(3);
             } elseif ($game->isGuestWin()) {
                 $this->L++;
             } elseif ($game->isDraw()) {
                 $this->D++;
+                $this->addPTS(1);
             }
         }
 
@@ -320,10 +333,12 @@ class Team
             $this->P++;
             if ($game->isGuestWin()) {
                 $this->W++;
+                $this->addPTS(3);
             } elseif ($game->isHomeWin()) {
                 $this->L++;
             } elseif ($game->isDraw()) {
                 $this->D++;
+                $this->addPTS(1);
             }
         }
     }
