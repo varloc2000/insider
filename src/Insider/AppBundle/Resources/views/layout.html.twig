@@ -22,10 +22,6 @@
 {% endblock %}
 
 {% block javascripts %}
-    {% javascripts
-        "@jquery_js"
-        "@bootstrap_js"
-    %}
-        <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    <script src="{{ asset('bundles/insiderapp/components/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('bundles/insiderapp/components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 {% endblock %}

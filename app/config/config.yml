@@ -33,7 +33,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [InsiderAppBundle]
+    bundles:        []
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -67,5 +67,8 @@ swiftmailer:
     spool:     { type: memory }
 
 sp_bower:
+    install_on_warmup: true
     bundles:
         InsiderAppBundle: ~
+    assetic:
+        enabled: false
