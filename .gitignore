@@ -9,6 +9,7 @@
 /vendor/
 /bin/
 /composer.phar
+.idea
 
 /node_modules/
 /src/Insider/AppBundle/Resources/public/components/cache/
