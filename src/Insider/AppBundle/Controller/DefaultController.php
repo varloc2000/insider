@@ -35,24 +35,22 @@ class DefaultController extends Controller
         if ($request->isXmlHttpRequest()) {
             $response = new JsonResponse();
 
-            $response->setData([
+            $response->setData(array(
                 'success' => count($games) > 0,
-                'content' => $this->render('InsiderAppBundle:Default:week_table.html.twig', [
+                'content' => $this->render('InsiderAppBundle:Default:week_table.html.twig', array(
                     'games' => $games,
                     'week' => $week,
                     'last_week' => $tour,
                     'teams' => $teams,
-                ])->getContent(),
-            ]);
-
+                ))->getContent(),
+            ));
         } else {
-
-            $response = $this->render('InsiderAppBundle:Default:index.html.twig', [
+            $response = $this->render('InsiderAppBundle:Default:index.html.twig', array(
                 'games' => $games,
                 'week' => $week,
                 'last_week' => $tour,
                 'teams' => $teams,
-            ]);
+            ));
         }
 
         return $response;
