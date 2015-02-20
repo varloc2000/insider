@@ -72,6 +72,19 @@ class Team
     private $PTS = 0;
 
     /**
+     * @var int
+     * The percent of current week prediction.
+     * @see http://www.3dkingdoms.com/chess/elo.htm
+     */
+    private $prediction = 0;
+
+    /**
+     * @var int
+     * http://footballdatabase.com/methodology.php
+     */
+    private $eloDiff = 0;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -314,6 +327,38 @@ class Team
         return $this;
     }
 
+    /**
+     * @return int
+     */
+    public function getPrediction()
+    {
+        return $this->prediction;
+    }
+
+    /**
+     * @param int $prediction
+     */
+    public function setPrediction($prediction)
+    {
+        $this->prediction = $prediction;
+    }
+
+    /**
+     * @return int
+     */
+    public function getEloDiff()
+    {
+        return $this->eloDiff;
+    }
+
+    /**
+     * @param int $eloDiff
+     */
+    public function setEloDiff($eloDiff)
+    {
+        $this->eloDiff = $eloDiff;
+    }
+
     public function calculateGamesStatistic()
     {
         foreach($this->getHomeGames() as $game) {
@@ -341,5 +386,14 @@ class Team
                 $this->addPTS(1);
             }
         }
+
+        $this->calculateEloRating();
+    }
+
+    public function calculateEloRating()
+    {
+        $score = $this->W + $this->D / 4;
+        $total = $this->W + $this->D + $this->L;
+        $this->prediction = round(($score /  $total) * 10000) / 100;
     }
 }

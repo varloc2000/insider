@@ -13,20 +13,11 @@ class DefaultController extends Controller
         // One game for comand per week
         $week = $request->query->get('week') ?: null;
 
-        $games = $this->getDoctrine()
-            ->getRepository('InsiderAppBundle:Game')
-            ->getGamesByTour($week)
-        ;
+        $games = $this->getGameRepository()->getGamesByTour($week);
 
-        $tour = $this->getDoctrine()
-            ->getRepository('InsiderAppBundle:Game')
-            ->getMaxTour()
-        ;
+        $tour = $this->getGameRepository()->getMaxTour();
 
-        $teams = $this->getDoctrine()
-            ->getRepository('InsiderAppBundle:Team')
-            ->getLeagueDataByTour(null !== $week ? $week : $tour)
-        ;
+        $teams = $this->getTeamRepository()->getLeagueDataByTourSortedByGD(null !== $week ? $week : $tour);
 
         foreach ($teams as $team) {
             $team[0]->calculateGamesStatistic();
@@ -54,5 +45,21 @@ class DefaultController extends Controller
         }
 
         return $response;
+    }
+
+    /**
+     * @return \Insider\AppBundle\Entity\GameRepository
+     */
+    protected function getGameRepository()
+    {
+        return $this->getDoctrine()->getRepository('InsiderAppBundle:Game');
+    }
+
+    /**
+     * @return \Insider\AppBundle\Entity\TeamRepository
+     */
+    protected function getTeamRepository()
+    {
+        return $this->getDoctrine()->getRepository('InsiderAppBundle:Team');
     }
 }

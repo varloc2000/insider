@@ -3,6 +3,9 @@
         <tr>
             <th class="text-center">League Table</th>
             <th class="text-center">Match Results</th>
+            {% if null != week %}
+                <th class="text-center"><a href="http://en.wikipedia.org/wiki/World_Football_Elo_Ratings">Elo Ratings</a></th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -104,6 +107,30 @@
                 </table>
                 {# End Match results Table #}
             </td>
+            {% if null != week %}
+            <td style="padding: 0;">
+                {# Prediction Table #}
+                <table width="100%" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="text-muted text-center">
+                                <small>Week {{ week }} Prediction of Championship</small>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for data in teams %}
+                        {% set team = data.0 %}
+                        <tr>
+                            <td>{{ team.name }}</td>
+                            <td class="text-right">{{ team.prediction }} %</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {# End Prediction Table #}
+            </td>
+            {% endif %}
         </tr>
     </tbody>
 </table>

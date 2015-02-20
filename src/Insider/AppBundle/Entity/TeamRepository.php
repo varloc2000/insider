@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class TeamRepository extends EntityRepository
 {
     /**
+     * Group data by team and join it with games data to calculate total goals
      * @param integer $tour
      * @return array
      */
@@ -37,5 +38,20 @@ class TeamRepository extends EntityRepository
         ;
 
         return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param integer $tour
+     * @return array
+     */
+    public function getLeagueDataByTourSortedByGD($tour)
+    {
+        $teams = $this->getLeagueDataByTour($tour);
+
+        usort($teams, function($a, $b) {
+            return $b['GD'] - $a['GD'];
+        });
+
+        return $teams;
     }
 }
